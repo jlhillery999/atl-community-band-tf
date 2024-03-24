@@ -15,3 +15,7 @@ variable "project_zone" {
     type    = string
     default = "us-east1-c"
 }
+
+variable "firebase_web_app_name" {
+    type    = string
+}
