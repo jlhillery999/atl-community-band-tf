@@ -27,10 +27,3 @@ resource "google_firebase_web_app" "this" {
 
   depends_on = [ google_firebase_project.this ]
 }
-
-resource "google_firebase_hosting_site" "this" {
-  provider = google-beta
-  project  = var.project_id
-  site_id = var.firebase_web_app_site_id
-  app_id = google_firebase_web_app.this.app_id
-}

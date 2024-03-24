@@ -19,7 +19,3 @@ variable "project_zone" {
 variable "firebase_web_app_name" {
     type    = string
 }
-
-variable "firebase_web_app_site_id" {
-    type    = string
-}
