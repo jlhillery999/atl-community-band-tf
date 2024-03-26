@@ -39,7 +39,7 @@ resource "google_kms_crypto_key" "firebase_api_key" {
   name     = var.firebase_api_key_name
   key_ring = google_kms_key_ring.web_app.id
   purpose  = "ENCRYPT_DECRYPT"
-  rotation_period = 7776000
+  rotation_period = "7776000s"
   version_template {
     algorithm         = "GOOGLE_SYMMETRIC_ENCRYPTION"
     protection_level  = "SOFTWARE"
