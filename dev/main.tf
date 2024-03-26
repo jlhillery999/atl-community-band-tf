@@ -64,6 +64,7 @@ resource "google_kms_crypto_key" "firebase_api_key" {
 
 resource "google_secret_manager_secret" "firebase_api_key" {
   secret_id = var.firebase_api_key_secret_id
+  project = var.project_id
 
   replication {
     auto {
