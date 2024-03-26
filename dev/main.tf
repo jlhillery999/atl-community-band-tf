@@ -21,6 +21,13 @@ resource "google_project_service" "cloud_kms_api" {
   disable_dependent_services = true
 }
 
+resource "google_project_service" "secret_manager_api" {
+  project = var.project_id
+  service = "secretmanager.googleapis.com"
+
+  disable_dependent_services = true
+}
+
 resource "google_firebase_project" "this" {
   provider = google-beta
   project  = var.project_id
@@ -55,7 +62,22 @@ resource "google_kms_crypto_key" "firebase_api_key" {
   }
 }
 
-resource "google_kms_secret_ciphertext" "firebase_api_key" {
-  crypto_key = google_kms_crypto_key.firebase_api_key.id
-  plaintext  = var.firebase_api_key_text
+resource "google_secret_manager_secret" "firebase_api_key" {
+  secret_id = var.firebase_api_key_secret_id
+
+  replication {
+    auto {
+      customer_managed_encryption {
+        kms_key_name = google_kms_crypto_key.firebase_api_key.name
+      }
+    }
+  }
+
+  depends_on = [ google_project_service.secret_manager_api ]
+}
+
+resource "google_secret_manager_secret_version" "firebase_api_key" {
+  secret = google_secret_manager_secret.firebase_api_key.id
+
+  secret_data = var.firebase_api_key_text
 }

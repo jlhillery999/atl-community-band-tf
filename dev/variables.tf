@@ -31,3 +31,8 @@ variable "firebase_api_key_name" {
 variable "firebase_api_key_text" {
     type    = string
 }
+
+variable "firebase_api_key_secret_id" {
+    type        = string
+    sensitive   = true
+}
