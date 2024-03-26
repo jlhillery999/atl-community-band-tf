@@ -69,12 +69,15 @@ resource "google_secret_manager_secret" "firebase_api_key" {
   replication {
     auto {
       customer_managed_encryption {
-        kms_key_name = google_kms_crypto_key.firebase_api_key.primary.name
+        kms_key_name = var.firebase_api_key_name
       }
     }
   }
 
-  depends_on = [ google_project_service.secret_manager_api ]
+  depends_on = [ 
+    google_project_service.secret_manager_api,
+    google_kms_crypto_key.firebase_api_key    
+  ]
 }
 
 resource "google_secret_manager_secret_version" "firebase_api_key" {
