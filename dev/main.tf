@@ -14,6 +14,13 @@ resource "google_project_service" "firebase_api" {
   depends_on = [ google_project_service.cloud_resource_manager_api ]
 }
 
+resource "google_project_service" "cloud_kms_api" {
+  project = var.project_id
+  service = "cloudkms.googleapis.com"
+
+  disable_dependent_services = true
+}
+
 resource "google_firebase_project" "this" {
   provider = google-beta
   project  = var.project_id
@@ -33,6 +40,8 @@ resource "google_kms_key_ring" "web_app" {
   project  = var.project_id
   name     = var.web_app_key_ring_name
   location = var.project_region
+
+  depends_on = [ google_project_service.cloud_kms_api ]
 }
 
 resource "google_kms_crypto_key" "firebase_api_key" {
