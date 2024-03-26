@@ -69,7 +69,7 @@ resource "google_secret_manager_secret" "firebase_api_key" {
   replication {
     auto {
       customer_managed_encryption {
-        kms_key_name = google_kms_crypto_key.firebase_api_key.name
+        kms_key_name = google_kms_crypto_key.firebase_api_key.primary.name
       }
     }
   }
