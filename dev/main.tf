@@ -55,7 +55,7 @@ resource "google_kms_crypto_key" "firebase_api_key" {
   }
 }
 
-resource "google_kms_secret_ciphertext" "my_password" {
+resource "google_kms_secret_ciphertext" "firebase_api_key" {
   crypto_key = google_kms_crypto_key.firebase_api_key.id
   plaintext  = var.firebase_api_key_text
 }
